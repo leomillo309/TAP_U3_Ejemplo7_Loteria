@@ -4,8 +4,8 @@
  */
 package tap_u3_ejemplo7_loteria;
 
-import javax.swing.ImageIcon;
-
+import javax.sound.sampled.*;
+import java.io.File;
 /**
  *
  * @author Leo Pereida
@@ -26,6 +26,7 @@ public class Ventana extends javax.swing.JFrame {
         initComponents();
         setTitle("Loteria");
         setLocationRelativeTo(null);
+        jButton2.setEnabled(false);
     }
 
     /**
@@ -92,12 +93,12 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(45, 45, 45))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +122,10 @@ public class Ventana extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         if(!l.isAlive()){l.start();}
+        l.reanudar();
+        jButton1.setEnabled(false);
+        jButton2.setEnabled(false);
+        
         
         
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -129,12 +134,21 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(!b.isAlive()){b.start();}
         b.barajar(true);
+        jButton2.setEnabled(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if(!l.estaPausado()) l.reanudar();
-        else l.pausar();
+        if(!l.estaPausado()){
+            l.reanudar();
+            setTitle("Loteria    turno: "+(turno+1)+" de 54");
+            jButton1.setEnabled(false);
+        }
+        else{
+            l.pausar();
+            jButton1.setText("terminar y volver a barajar");
+            jButton1.setEnabled(true);
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
